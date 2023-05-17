@@ -1,19 +1,46 @@
 const APIkey = 'c0e1f4a38c97c4f0d56bc4b502970cd4';
 const cityInput = document.getElementById('city-search');
 const currentWeatherEl = document.getElementById('current-weather');
+const searchHistoryEl = document.getElementById('history-list')
+let localStorageList = []
+
+function saveSearchHistory(city) {
+    let history = JSON.parse(localStorage.getItem('localStorageList')) || []
+    if (!history.includes(city)) {
+      history.push(city);
+      localStorage.setItem('localStorageList', JSON.stringify(history));
+    }
+  }
+  
+  // Update the makeHistoryList function
+  function makeHistoryList() {
+    const historyList = JSON.parse(localStorage.getItem('localStorageList')) || []
+    historyList.forEach((citySaved) => {
+      const list = document.createElement('button');
+      list.textContent = citySaved;
+      list.addEventListener('click', () => {
+        getWeather(citySaved);
+      });
+      searchHistoryEl.appendChild(list);
+    });
+  }
+// call it so the list shows when the page is loaded
+makeHistoryList();
 
 //when search button is clicked or enter is presses, the fetch request occures
 function handleFormSubmit(event) {
   event.preventDefault();
   const city = cityInput.value.trim();
   if (city) {
-    getWeatherDaily(city);
+    getWeather(city);
+    saveSearchHistory(city);
+    makeHistoryList();
     cityInput.value = '';
   }
 }
 document.getElementById('search-form').addEventListener('submit', handleFormSubmit);
 
-function getWeatherDaily(city) {
+function getWeather(city) {
   const requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=imperial`;
 
   fetch(requestURL)
@@ -40,13 +67,13 @@ function getWeatherDaily(city) {
       `
       //set the contents of the daily weather HTML as shown above
         currentWeatherEl.innerHTML = currentWeatherHTML
-        getFiveDayForecast(lat, lon)
+        getFiveDays(lat, lon)
       console.log(data);
     })
 
 }
 
-function getFiveDayForecast(lat, lon) {
+function getFiveDays(lat, lon) {
     const requestURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIkey}`;
   
     fetch(requestURL)
@@ -55,7 +82,7 @@ function getFiveDayForecast(lat, lon) {
         const futureConditions = data.list;
   
         let fiveCards = '';
-        for (let i = 0; i < futureConditions.length; i += 8) {
+        for (let i = 7; i < futureConditions.length; i += 8) {
           let forecast = futureConditions[i];
           let temp = forecast.main.temp;
           let humidity = forecast.main.humidity;
