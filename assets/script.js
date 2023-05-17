@@ -16,6 +16,7 @@ function saveSearchHistory(city) {
   
   // Update the makeHistoryList function
   function makeHistoryList() {
+    searchHistoryEl.innerHTML = ''
     const historyList = JSON.parse(localStorage.getItem('localStorageList')) || []
     historyList.forEach((citySaved) => {
       //creates a clickable button 
