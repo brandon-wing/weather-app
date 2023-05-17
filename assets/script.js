@@ -1,5 +1,6 @@
 const APIkey = 'c0e1f4a38c97c4f0d56bc4b502970cd4';
 const cityInput = document.getElementById('city-search');
+const currentWeatherEl = document.getElementById('current-weather');
 
 //when search button is clicked or enter is presses, the fetch request occures
 function handleFormSubmit(event) {
@@ -26,7 +27,18 @@ function getWeatherDaily(city) {
         const date = data.dt
         const high = data.main.temp_max
         const low = data.main.temp_min
+        const icon = data.weather[0].icon
         //see the response in the console
+        const currentWeatherHTML = `
+        <h3>${name}</h3>
+        <p>Date: ${date}</p>
+        <p>Temperature: ${high}°F / ${low}°F</p>
+        <p>Humidity: ${humidity}%</p>
+        <p>Wind Speed: ${wind} mph</p>
+        <img src="https://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
+      `
+      //set the contents of the daily weather HTML as shown above
+        currentWeatherEl.innerHTML = currentWeatherHTML
         getFiveDayForecast(lat, lon)
       console.log(data);
     })
