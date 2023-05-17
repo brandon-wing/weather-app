@@ -18,10 +18,30 @@ function getWeatherDaily(city) {
   fetch(requestURL)
     .then(response => response.json())
     .then(data => {
+        const lat = data.coord.lat
+        const lon = data.coord.lon
+        const name = data.name
+        const wind = data.wind.speed
+        const humidity = data.main.humidity
+        const date = data.dt
+        const high = data.main.temp_max
+        const low = data.main.temp_min
         //see the response in the console
+        getFiveDayForecast(lat, lon)
       console.log(data);
     })
+
 }
 
+function getFiveDayForecast(lat, lon) {
+    const requestURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIkey}`;
+  
+    fetch(requestURL)
+      .then(response => response.json())
+      .then(data => {
+        //log the response from the next fetch request too
+        console.log(data);
+      })
+    }
 
 
