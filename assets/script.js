@@ -52,9 +52,41 @@ function getFiveDayForecast(lat, lon) {
     fetch(requestURL)
       .then(response => response.json())
       .then(data => {
-        //log the response from the next fetch request too
+        const futureConditions = data.list;
+  
+        let fiveCards = '';
+        for (let i = 0; i < futureConditions.length; i += 8) {
+          let forecast = futureConditions[i];
+          let temp = forecast.main.temp;
+          let humidity = forecast.main.humidity;
+          let wind = forecast.wind.speed;
+          let date = forecast.dt;
+          let icon = forecast.weather[0].icon;
+          let formattedDate = dayjs.unix(date).format('MM/DD/YY');
+          const forecastCard = `
+            <div class="col">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">${formattedDate}</h5>
+                  <p class="card-text">Temperature: ${temp}°F</p>
+                  <p class="card-text">Wind: ${wind}°F</p>
+                  <p class="card-text">Humidity: ${humidity}°F</p>
+                  <img src="https://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
+                </div>
+              </div>
+            </div>
+          `;
+  
+          fiveCards += forecastCard;
+        }
+  
+        const forecastCardsContainer = document.getElementById('forecast-cards');
+        forecastCardsContainer.innerHTML = fiveCards;
+  
         console.log(data);
-      })
-    }
+      });
+  }
+  
+  
 
 
