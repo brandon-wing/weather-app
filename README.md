@@ -13,7 +13,11 @@
 - [Tests](#tests)
 <a name="Installation"></a>
 ## Installation
-  No installation required, simply open the index.html in your browser or visit the deployed github page.
+  No installation required, simply open the index.html in your browser or visit the deployed github page below.
+
+  https://rudyxwhite.github.io/look-at-the-weather/
+
+  
 ## Screenshot
   
 
