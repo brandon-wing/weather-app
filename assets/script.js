@@ -29,9 +29,10 @@ function getWeatherDaily(city) {
         const low = data.main.temp_min
         const icon = data.weather[0].icon
         //see the response in the console
+        let formattedDate = dayjs.unix(date).format('MM/DD/YY')
         const currentWeatherHTML = `
         <h3>${name}</h3>
-        <p>Date: ${date}</p>
+        <p>Date: ${formattedDate}</p>
         <p>Temperature: ${high}°F / ${low}°F</p>
         <p>Humidity: ${humidity}%</p>
         <p>Wind Speed: ${wind} mph</p>
