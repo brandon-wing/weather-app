@@ -104,8 +104,8 @@ function getFiveDays(lat, lon) {
                 <div class="card-body">
                   <h5 class="card-title">${formattedDate}</h5>
                   <p class="card-text">Temperature: ${temp}°F</p>
-                  <p class="card-text">Wind: ${wind}°F</p>
-                  <p class="card-text">Humidity: ${humidity}°F</p>
+                  <p class="card-text">Wind: ${wind}mph</p>
+                  <p class="card-text">Humidity: ${humidity}%</p>
                   <img src="https://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
                 </div>
               </div>
